@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     connectedUsers++
+    io.emit('user', connectedUsers)
     console.log(`Um usuário se conectou!\nUsuários conectados agora: ${connectedUsers}`)
 
     socket.on('chat message', (msg) => {
@@ -22,6 +23,7 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         connectedUsers = (connectedUsers - 1)
+        io.emit('user', connectedUsers)
         console.log(`Um usuário se desconectou...\nUsuários conectados agora: ${connectedUsers}`)
     })
 })

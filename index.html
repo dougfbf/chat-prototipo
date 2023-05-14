@@ -52,7 +52,7 @@
         #messages > li {
             word-wrap: break-word;
             overflow-wrap: break-word;
-            margin-top: 10px;
+            margin-top: 5px;
             margin-left: 10px;
             margin-right: 10px;
             width: 100%;
@@ -63,9 +63,23 @@
         #messages > li:nth-child(odd) {
             background: rgb(57, 57, 80)
         }
+        #messages > li:nth-child(1) {
+            margin-top: 20px;
+        }
+        .square {
+            margin-left: 10px;
+            color: rgb(98, 233, 127);
+            position: sticky;
+            top: 10px;
+            right: 10px;
+            width: auto;
+            height: auto;
+            backdrop-filter: blur(10px);
+        }
     </style>
 </head>
 <body>
+    <div class="square"><strong>🟢 Usuários Online:</strong> <span id="userCount"></span></div>
     <ul id="messages"></ul>
     <form id="form" action="">
         <input type="text" placeholder="Digite sua mensagem..." id="input" autocomplete="off" /><button>Enviar</button>
@@ -73,6 +87,7 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        document.getElementById('userCount').innerText = '❓'
         var socket = io()
 
         var messages = document.getElementById('messages')
@@ -85,6 +100,14 @@
                 socket.emit('chat message', input.value)
                 input.value = ''
             }
+        })
+
+        socket.on('user', function(connectedUsers) {
+            if (connectedUsers === 1) {
+                document.getElementById('userCount').innerText = '1 (vc tá sozinho :\\)'
+                return
+            }
+            document.getElementById('userCount').innerText = connectedUsers
         })
 
         socket.on('chat message', function(msg) {
