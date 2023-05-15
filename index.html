@@ -79,7 +79,7 @@
     </style>
 </head>
 <body>
-    <div class="square"><strong>🟢 Usuários Online: </strong><span id="userCount"></span></div>
+    <div class="square"><strong>🟢 Usuários Online: </strong><span id="userCount">1</span></div>
     <ul id="messages"></ul>
     <form id="form" action="">
         <input type="text" placeholder="Digite sua mensagem..." id="input" autocomplete="off" /><button>Enviar</button>
@@ -87,7 +87,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        document.getElementById('userCount').innerText = 1
         var socket = io()
 
         var messages = document.getElementById('messages')
